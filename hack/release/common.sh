@@ -83,6 +83,7 @@ publishHelmChart() {
     HELM_CHART_FILE_NAME="karpenter-${HELM_CHART_VERSION}.tgz"
 
     cd charts
+    helm dependency update karpenter
     helm lint karpenter
     helm package karpenter --version $HELM_CHART_VERSION
     helm push "${HELM_CHART_FILE_NAME}" "oci://${RELEASE_REPO}"

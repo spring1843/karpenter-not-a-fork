@@ -28,6 +28,7 @@ jobs:
           ref: ${{ env.TAG_COMMIT }}
       - uses: ./.github/actions/install-go-and-dependencies
       - uses: ./.github/actions/authenticate-aws
+      - uses: ./.github/actions/authenticate-ghcr
       - run: make release
         env:
           RELEASE_VERSION: ${{ env.TAG }}
