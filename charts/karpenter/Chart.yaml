@@ -16,8 +16,8 @@ sources:
   - https://github.com/aws/karpenter/
 dependencies:
   - name: karpenter-core-crd
-    version: "v0.0.7"
+    version: "v0.0.8"
     repository: "oci://ghcr.io/spring1843/karpenter-core"
   - name: karpenter-core-controller
-    version: "v0.0.7"
+    version: "v0.0.8"
     repository: "oci://ghcr.io/spring1843/karpenter-core"
