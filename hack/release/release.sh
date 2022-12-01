@@ -16,8 +16,8 @@ setEnvVariables
 authenticate
 buildImages
 cosignImages
-publishHelmChart "karpenter-crd" "${RELEASE_VERSION}"
-publishHelmChart "karpenter" "${RELEASE_VERSION}"
+publishHelmChart "karpenter-crd" "${HELM_CHART_VERSION}"
+publishHelmChart "karpenter" "${HELM_CHART_VERSION}"
 
 if [[ $IS_STABLE_RELEASE == true ]]; then
     notifyRelease "stable" $RELEASE_VERSION
