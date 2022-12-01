@@ -1,6 +1,6 @@
 apiVersion: v2
-name: karpenter
-description: A Helm chart for Karpenter, an open-source node provisioning project built for Kubernetes.
+name: karpenter-crd
+description: A Helm chart for Karpenter CRDs and other manifests
 type: application
 version: 0.19.2
 appVersion: 0.19.2
@@ -14,7 +14,4 @@ home: https://karpenter.sh/
 icon: https://repository-images.githubusercontent.com/278480393/dab059c8-caa1-4b55-aaa7-3d30e47a5616
 sources:
   - https://github.com/aws/karpenter/
-dependencies:
-  - name: karpenter-core
-    version: "v0.0.15"
-    repository: "oci://ghcr.io/spring1843/karpenter-core"
+

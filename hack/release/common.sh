@@ -2,8 +2,8 @@
 set -euo pipefail
 
 config(){
-  AWS_ACCOUNT_ID="071440425669"
-  ECR_GALLERY_NAME="karpenter"
+  AWS_ACCOUNT_ID="339104714817"
+  ECR_GALLERY_NAME="d1w0j9s0"
   RELEASE_REPO=${RELEASE_REPO:-public.ecr.aws/${ECR_GALLERY_NAME}/}
   PRIVATE_PULL_THROUGH_HOST="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com"
   SNS_TOPIC_ARN="arn:aws:sns:us-east-1:${AWS_ACCOUNT_ID}:KarpenterReleases"
@@ -80,12 +80,14 @@ pullPrivateReplica(){
 }
 
 publishHelmChart() {
-    HELM_CHART_FILE_NAME="karpenter-${HELM_CHART_VERSION}.tgz"
+    CHART_NAME=$1
+    HELM_CHART_VERSION=$2
+    HELM_CHART_FILE_NAME="${CHART_NAME}-${HELM_CHART_VERSION}.tgz"
 
     cd charts
-    helm dependency update karpenter
-    helm lint karpenter
-    helm package karpenter --version $HELM_CHART_VERSION
+    helm dependency update "${CHART_NAME}"
+    helm lint "${CHART_NAME}"
+    helm package "${CHART_NAME}" --version $HELM_CHART_VERSION
     helm push "${HELM_CHART_FILE_NAME}" "oci://${RELEASE_REPO}"
     rm "${HELM_CHART_FILE_NAME}"
     cd ..
