@@ -22,7 +22,7 @@ Start with Karpenter's GitHub [cloudprovider](https://github.com/aws/karpenter/t
 By default, Karpenter uses Amazon Linux 2 images.
 
 ### Can I provide my own custom operating system images?
-Karpenter has multiple mechanisms for configuring the [operating system]({{< ref "./aws/operating-systems/" >}}) for your nodes.
+Karpenter has multiple mechanisms for configuring the [operating system]({{< ref "./tasks/operating-systems/" >}}) for your nodes.
 
 ### Can Karpenter deal with workloads for mixed architecture cluster (arm vs. amd)?
 Karpenter is flexible to multi architecture configurations using [well known labels]({{< ref "./tasks/scheduling.md">}}).
@@ -90,11 +90,11 @@ However, you can use Session Manager (SSM) or EC2 Instance Connect to gain shell
 See [Node NotReady]({{< ref "./troubleshooting/#node-notready" >}}) troubleshooting for an example of starting an SSM session from the command line or [EC2 Instance Connect](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-connect-set-up.html) documentation to connect to nodes using SSH.
 
 Though not recommended, if you need to access Karpenter-managed nodes without AWS credentials, you can add SSH keys using AWSNodeTemplate.
-See [Custom User Data]({{< ref "./aws/operating-systems/" >}}) for details.
+See [Custom User Data]({{< ref "./tasks/operating-systems/" >}}) for details.
 
 ### Can I set total limits of CPU and memory for a provisioner?
 Yes, the setting is provider-specific.
-See examples in [Accelerators, GPU]({{< ref "./aws/provisioning/#accelerators-gpu" >}}) Karpenter documentation.
+See examples in [Accelerators, GPU]({{< ref "./tasks/node-templates/#accelerators-gpu" >}}) Karpenter documentation.
 
 ### Can I mix spot and on-demand EC2 run types?
 Yes, see [Example Provisioner Resource]({{< ref "./provisioner/#example-provisioner-resource" >}}) for an example.
@@ -117,7 +117,7 @@ The EC2 fleet API attempts to provision the instance type based on an allocation
 If you are using the on-demand capacity type, then Karpenter uses the `lowest-price` allocation strategy.
 So fleet will provision the lowest priced instance type it can get from the 60 instance types Karpenter passed to the EC2 fleet API.
 If the instance type is unavailable for some reason, then fleet will move on to the next cheapest instance type.
-If you are using the spot capacity type, Karpenter uses the price-capacity-optimized allocation strategy. This tells fleet to find the instance type that EC2 has the most capacity for while also considering price. This allocation strategy will balance cost and decrease the probability of a spot interruption happening in the near term. 
+If you are using the spot capacity type, Karpenter uses the price-capacity-optimized allocation strategy. This tells fleet to find the instance type that EC2 has the most capacity for while also considering price. This allocation strategy will balance cost and decrease the probability of a spot interruption happening in the near term.
 See [Choose the appropriate allocation strategy](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-allocation-strategy.html#ec2-fleet-allocation-use-cases) for information on fleet optimization.
 
 ### What if there is no Spot capacity? Will Karpenter use On-Demand?
@@ -171,6 +171,23 @@ error: error validating "provisioner.yaml": error validating data: ValidationErr
 ```
 
 The `startupTaints` parameter was added in v0.10.0.  Helm upgrades do not upgrade the CRD describing the provisioner, so it must be done manually. For specific details, see the [Upgrade Guide]({{< ref "./upgrade-guide/#upgrading-to-v0100" >}})
+
+## Interruption Handling
+
+### Should I use Karpenter interruption handling alongside Node Termination Handler?
+No. We recommend against using Node Termination Handler alongside Karpenter due to conflicts that could occur from the two components handling the same events.
+
+### Why should I migrate from Node Termination Handler?
+Karpenter's native interruption handling offers two main benefits over the standalone Node Termination Handler component:
+1. You don't have to manage and maintain a separate component to exclusively handle interruption events.
+2. Karpenter's native interruption handling coordinates with other deprovisoining so that consolidation, expiration, etc. can be aware of interruption events and vice-versa.
+
+### Why am I receiving QueueNotFound errors when I set `aws.interruptionQueueName`?
+Karpenter requires a queue to exist that receives event messages from EC2 and health services in order to handle interruption messages properly for nodes.
+
+Details on the types of events that Karpenter handles can be found in the [Interruption Handling Docs]({{< ref "./tasks/deprovisioning/#interruption" >}}).
+
+Details on provisioning the SQS queue and EventBridge rules can be found in the [Getting Started Guide]({{< ref "./getting-started/getting-started-with-eksctl/#create-the-karpenter-infrastructure-and-iam-roles" >}}).
 
 ## Consolidation
 
