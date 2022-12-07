@@ -4,7 +4,10 @@ set -euo pipefail
 config(){
   AWS_ACCOUNT_ID="339104714817"
   ECR_GALLERY_NAME="d1w0j9s0"
-  RELEASE_REPO=${RELEASE_REPO:-public.ecr.aws/${ECR_GALLERY_NAME}/}
+  AWS_RELEASE_REPO=${RELEASE_REPO:-public.ecr.aws/${ECR_GALLERY_NAME}/}
+  GH_RELEASE_REPO=${RELEASE_REPO:-ghcr.io/${GITHUB_ACCOUNT}/karpenter}
+
+  RELEASE_REPO=$AWS_RELEASE_REPO
   PRIVATE_PULL_THROUGH_HOST="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com"
   SNS_TOPIC_ARN="arn:aws:sns:us-east-1:${AWS_ACCOUNT_ID}:KarpenterReleases"
   CURRENT_MAJOR_VERSION="0"
@@ -82,6 +85,7 @@ pullPrivateReplica(){
 publishHelmChart() {
     CHART_NAME=$1
     HELM_CHART_VERSION=$2
+    RELEASE_REPO=$3
     HELM_CHART_FILE_NAME="${CHART_NAME}-${HELM_CHART_VERSION}.tgz"
 
     helm version
