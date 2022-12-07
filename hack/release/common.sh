@@ -84,6 +84,7 @@ publishHelmChart() {
     HELM_CHART_VERSION=$2
     HELM_CHART_FILE_NAME="${CHART_NAME}-${HELM_CHART_VERSION}.tgz"
 
+    helm version
     cd charts
     helm dependency update "${CHART_NAME}"
     helm lint "${CHART_NAME}"
