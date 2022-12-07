@@ -2,6 +2,7 @@
 set -euo pipefail
 
 config(){
+  GITHUB_ACCOUNT="spring1843"
   AWS_ACCOUNT_ID="339104714817"
   ECR_GALLERY_NAME="d1w0j9s0"
   AWS_RELEASE_REPO=${RELEASE_REPO:-public.ecr.aws/${ECR_GALLERY_NAME}/}
