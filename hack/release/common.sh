@@ -94,6 +94,8 @@ publishHelmChart() {
     helm dependency update "${CHART_NAME}"
     helm lint "${CHART_NAME}"
     helm package "${CHART_NAME}" --version $HELM_CHART_VERSION
+
+    echo "publishing ${HELM_CHART_FILE_NAME} to ${RELEASE_REPO}"
     helm push "${HELM_CHART_FILE_NAME}" "oci://${RELEASE_REPO}"
     rm "${HELM_CHART_FILE_NAME}"
     cd ..
