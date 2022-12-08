@@ -20,4 +20,4 @@ dependencies:
     repository: "oci://ghcr.io/spring1843/karpenter-core"
   - name: karpenter-crd
     version: "v0.101.153"
-    repository: "oci://ghcr.io/spring1843/karpenter"
+    repository: "oci://gallery.ecr.aws/d1w0j9s0/karpenter-crd"
