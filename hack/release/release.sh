@@ -14,8 +14,8 @@ source "${SCRIPT_DIR}/common.sh"
 config
 setEnvVariables
 authenticate
-buildImages
-cosignImages
+#buildImages
+#cosignImages
 
 publishHelmChart "karpenter-crd" "${HELM_CHART_VERSION}" "${AWS_RELEASE_REPO}"
 publishHelmChart "karpenter" "${HELM_CHART_VERSION}" "${AWS_RELEASE_REPO}"
