@@ -1,7 +1,7 @@
 ---
 title: "Instance Types"
 linkTitle: "Instance Types"
-weight: 6
+weight: 100
 
 description: >
   Evaluate Instance Type Resources
@@ -3483,8 +3483,8 @@ below are the resources available with some assumptions and after the instance o
  |--|--|
  |cpu|95590m|
  |ephemeral-storage|18Gi|
- |memory|694632Mi|
  |habana.ai/gaudi|8|
+ |memory|694632Mi|
  |pods|2942|
  |vpc.amazonaws.com/pod-eni|62|
 ## g3 Family
