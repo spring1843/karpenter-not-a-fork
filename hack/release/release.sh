@@ -17,8 +17,8 @@ authenticate
 buildImages
 cosignImages
 
-#publishHelmChart "karpenter-crd" "${HELM_CHART_VERSION}" "${GH_RELEASE_REPO}"
-publishHelmChart "karpenter" "${HELM_CHART_VERSION}" "${AWS_RELEASE_REPO}"
+publishHelmChartToGHCR "karpenter-crd" "${HELM_CHART_VERSION}"
+publishHelmChart "${HELM_CHART_VERSION}"
 
 if [[ $IS_STABLE_RELEASE == true ]]; then
     notifyRelease "stable" $RELEASE_VERSION
