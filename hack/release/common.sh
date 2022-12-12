@@ -5,9 +5,8 @@ config(){
   GITHUB_ACCOUNT="spring1843"
   AWS_ACCOUNT_ID="339104714817"
   ECR_GALLERY_NAME="d1w0j9s0"
-
   RELEASE_REPO=${RELEASE_REPO:-public.ecr.aws/${ECR_GALLERY_NAME}/}
-  RELEASE_REPO_GH=${RELEASE_REPO:-ghcr.io/${GITHUB_ACCOUNT}/karpenter}
+  RELEASE_REPO_GH=${RELEASE_REPO_GH:-ghcr.io/${GITHUB_ACCOUNT}/karpenter}
 
   PRIVATE_PULL_THROUGH_HOST="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com"
   SNS_TOPIC_ARN="arn:aws:sns:us-east-1:${AWS_ACCOUNT_ID}:KarpenterReleases"

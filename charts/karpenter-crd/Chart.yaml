@@ -2,8 +2,13 @@ apiVersion: v2
 name: karpenter-crd
 description: A Helm chart for Karpenter CRDs and other manifests
 type: application
+<<<<<<< HEAD
 version: 0.19.2
 appVersion: 0.19.2
+=======
+version: 0.20.0
+appVersion: 0.20.0
+>>>>>>> d3b31bd8b13be3f9a9ef9fb92b123cb690ae31da
 keywords:
   - cluster
   - node
