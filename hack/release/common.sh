@@ -103,7 +103,9 @@ publishHelmChartToGHCR() {
     helm dependency update "${CHART_NAME}"
     helm lint "${CHART_NAME}"
     helm package "${CHART_NAME}" --version $HELM_CHART_VERSION
-    helm push "${HELM_CHART_FILE_NAME}" "oci://${RELEASE_REPO_GH}"
+    echo "Pushing ${HELM_CHART_FILE_NAME} to oci://${RELEASE_REPO_GH}"
+    cat ~/.docker/config.json
+    helm push --debug "${HELM_CHART_FILE_NAME}" "oci://${RELEASE_REPO_GH}"
     rm "${HELM_CHART_FILE_NAME}"
     cd ..
 }
