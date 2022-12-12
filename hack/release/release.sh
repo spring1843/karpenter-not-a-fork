@@ -14,8 +14,8 @@ source "${SCRIPT_DIR}/common.sh"
 config
 setEnvVariables
 authenticate
-buildImages
-cosignImages
+#buildImages
+#cosignImages
 
 publishHelmChartToGHCR "karpenter-crd" "${HELM_CHART_VERSION}"
 publishHelmChart "${HELM_CHART_VERSION}"
