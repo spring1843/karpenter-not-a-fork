@@ -1,3 +1,6 @@
-dependencies: []
-digest: sha256:5595919ac269b4105dd65d20eb27cb271b8976c1d10903e0b504d349df30f017
-generated: "2020-12-02T11:48:25.741819-08:00"
+dependencies:
+- name: karpenter-core
+  repository: oci://ghcr.io/spring1843/karpenter-core
+  version: v0.0.15
+digest: sha256:89ebecd9de18375e1cb8e91cca86c8a6517692a288f473107d7822a585082f0f
+generated: "2022-11-30T20:38:00.652181-08:00"

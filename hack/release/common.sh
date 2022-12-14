@@ -2,9 +2,9 @@
 set -euo pipefail
 
 config(){
-  GITHUB_ACCOUNT="aws"
-  AWS_ACCOUNT_ID="071440425669"
-  ECR_GALLERY_NAME="karpenter"
+  GITHUB_ACCOUNT="spring1843"
+  AWS_ACCOUNT_ID="339104714817"
+  ECR_GALLERY_NAME="d1w0j9s0"
   RELEASE_REPO=${RELEASE_REPO:-public.ecr.aws/${ECR_GALLERY_NAME}/}
   RELEASE_REPO_GH=${RELEASE_REPO_GH:-ghcr.io/${GITHUB_ACCOUNT}/karpenter}
 
@@ -86,6 +86,7 @@ publishHelmChart() {
     HELM_CHART_FILE_NAME="karpenter-${HELM_CHART_VERSION}.tgz"
 
     cd charts
+    helm dependency update "${CHART_NAME}"
     helm lint karpenter
     helm package karpenter --version $HELM_CHART_VERSION
     helm push "${HELM_CHART_FILE_NAME}" "oci://${RELEASE_REPO}"
@@ -102,7 +103,9 @@ publishHelmChartToGHCR() {
     helm dependency update "${CHART_NAME}"
     helm lint "${CHART_NAME}"
     helm package "${CHART_NAME}" --version $HELM_CHART_VERSION
-    helm push "${HELM_CHART_FILE_NAME}" "oci://${RELEASE_REPO_GH}"
+    echo "Pushing ${HELM_CHART_FILE_NAME} to oci://${RELEASE_REPO_GH}"
+    cat ~/.docker/config.json
+    helm push --debug "${HELM_CHART_FILE_NAME}" "oci://${RELEASE_REPO_GH}"
     rm "${HELM_CHART_FILE_NAME}"
     cd ..
 }
